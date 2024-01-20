@@ -33,7 +33,7 @@ def getNewIpAddress():
         None
  
     Returns:
-        String: Next Valid IP Address.
+        String: Next available IP Address.
     """
     for a in range(1, 256):
         for b in range(1, 256):
