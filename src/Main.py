@@ -52,14 +52,13 @@ def ask():
         None
  
     Returns:
-        None
+        str: New IP if available
     """
     newIp = getNewIpAddress()
     if(newIp == None):
-        print("No IP Addresses Available")
-        return
+        return "No IP Addresses Available"
     ipAddressLeaseTimes[newIp] = time.time() + IP_LEASE_TIME
-    print("Offer", newIp)
+    return f"Offer {newIp}"
 
 def renew(ip):
     """
@@ -70,13 +69,13 @@ def renew(ip):
         None
  
     Returns:
-        None
+        str: Renewed IP if available
     """
     if(isIpLeased(ip)):
         ipAddressLeaseTimes[ip] = time.time() + IP_LEASE_TIME
-        print("RENEWED for", ip)
+        return f"RENEWED for {ip}"
     else:
-        print(ip, "is invalid")
+        return f"{ip} is invalid"
 
 def release(ip):
     """
@@ -87,13 +86,13 @@ def release(ip):
         None
  
     Returns:
-        None
+        str: Released IP if available
     """
     if(isIpLeased(ip)):
         ipAddressLeaseTimes[ip] = EXPIRED_LEASE_TIME
-        print("RELEASED for", ip)
+        return f"RELEASED for {ip}"
     else:
-        print(ip, "is invalid")
+        return f"{ip} is invalid"
 
 def status(ip):
     """
@@ -105,13 +104,12 @@ def status(ip):
         None
  
     Returns:
-        None
+        str: Status of the given IP
     """
     if(isIpLeased(ip)):
-        print(ip, "ASSIGNED")
+        return f"{ip} ASSIGNED"
     else:
-        print(ip, "AVAILABLE")
-    return
+        return f"{ip} AVAILABLE"
 
 def main():
     while(True):
@@ -125,7 +123,7 @@ def main():
         # Check for "ASK" command
         print("You entered", userInput)
         if(userInput == "ASK"):
-            ask()
+            print(ask())
             continue
 
         userInput = userInput.split(" ", 1)
@@ -142,11 +140,11 @@ def main():
 
         match command: 
             case "RENEW":
-                renew(ipInputted)
+                print(renew(ipInputted))
             case "RELEASE":
-                release(ipInputted)
+                print(release(ipInputted))
             case "STATUS":
-                status(ipInputted)
+                print(status(ipInputted))
             case _: 
                 print("Invalid command")
 
